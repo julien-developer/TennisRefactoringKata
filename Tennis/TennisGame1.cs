@@ -7,10 +7,10 @@ namespace Tennis
         private TennisPlayer player1;
         private TennisPlayer player2;
 
-        public TennisGame1(string player1Name, string player2Name)
+        public TennisGame1(TennisPlayer player1, TennisPlayer player2)
         {
-            player1 = new TennisPlayer(player1Name, 0);
-            player2 = new TennisPlayer(player2Name, 0);
+            this.player1 = player1;
+            this.player2 = player2;
         }
 
         public void WonPoint(PlayerId playerId)
