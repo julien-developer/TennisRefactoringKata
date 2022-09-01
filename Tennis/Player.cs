@@ -1,8 +1,8 @@
 ﻿namespace Tennis
 {
-    public class TennisPlayer
+    public class Player
     {
-        public TennisPlayer(string name, int initialPoints, int initialGames)
+        public Player(string name, int initialPoints, int initialGames)
         {
             Name = name;
             Points = initialPoints;

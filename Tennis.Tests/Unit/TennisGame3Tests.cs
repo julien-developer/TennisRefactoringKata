@@ -6,7 +6,7 @@ namespace Tennis.Tests
     public class TennisGame3Tests
     {
         [Theory(Skip = "Introduced personalisation of player name. Breaks the tests.")]
-        [ClassData(typeof(TestDataGenerator))]
+        [ClassData(typeof(ScorePresenterTestsData))]
         public void Tennis3Test(int score1, int score2, string expected)
         {
             // Arrange

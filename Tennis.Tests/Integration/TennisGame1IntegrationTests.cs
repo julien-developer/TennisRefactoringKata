@@ -9,9 +9,10 @@ namespace Tennis.Tests.Integration
         public void Games_WhenRunningPointSequence_ReturnsExpectedNumbers(int[] pointSequence, int expectedGames1, int expectedGames2, string expectedScore)
         {
             // Arrange
-            var player1 = new TennisPlayer("player1", 0, 0);
-            var player2 = new TennisPlayer("player2", 0, 0);
-            var game = new TennisGame1(player1, player2);
+            var scorePresenter = new ScorePresenter();
+            var player1 = new Player("player1", 0, 0);
+            var player2 = new Player("player2", 0, 0);
+            var game = new TennisGame1(scorePresenter, player1, player2);
 
             // Act
             for (int i = 0; i < pointSequence.Length; i++)

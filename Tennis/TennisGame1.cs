@@ -4,11 +4,16 @@ namespace Tennis
 {
     public class TennisGame1 : ITennisGame
     {
-        private TennisPlayer player1;
-        private TennisPlayer player2;
+        private readonly IScorePresenter scorePresenter;
+        private readonly Player player1;
+        private readonly Player player2;
 
-        public TennisGame1(TennisPlayer player1, TennisPlayer player2)
+        public TennisGame1(
+            IScorePresenter scorePresenter,
+            Player player1,
+            Player player2)
         {
+            this.scorePresenter = scorePresenter;
             this.player1 = player1;
             this.player2 = player2;
         }
@@ -20,9 +25,9 @@ namespace Tennis
             
             scoringPlayer.IncreasePoints();
 
-            if ((scoringPlayer.Points + otherPlayer.Points) >= 6)
+            if (IsScoreComplex(scoringPlayer.Points, otherPlayer.Points))
             {
-                if (Math.Abs(player1.Points - player2.Points) > 1)
+                if (IsScoreDifferenceGreaterThanOne(scoringPlayer.Points, otherPlayer.Points))
                 {
                     scoringPlayer.IncreaseGamesAndResetPoints();
                     otherPlayer.ResetPoints();
@@ -37,37 +42,16 @@ namespace Tennis
 
         public string GetPointScore()
         {
-            if (player1.Points < 4 && player2.Points < 4 && (player1.Points + player2.Points) < 6)
-            {
-                return SimpleScore(player1.Points, player2.Points);
-            }
-
-            return ScoreWhenAnyPlayerHasAtLeastFourPoints(player1.Points, player2.Points);
-        }
-
-        private string SimpleScore(int player1Score, int player2Score)
-        {
-            var scoreDescription1 = ScoreDescriptor.GetScoreDescription(player1Score);
-            var scoreDescription2 = (player1Score == player2Score) ? "All" : ScoreDescriptor.GetScoreDescription(player2Score);
-            return $"{scoreDescription1}-{scoreDescription2}";
-        }
-
-        private string ScoreWhenAnyPlayerHasAtLeastFourPoints(int player1Score, int player2Score)
-        {
-            if (player1Score == player2Score)
-            {
-                return "Deuce";
-            }
-
-            var scoreDifference = player1Score - player2Score;
-            var outcome = (Math.Abs(scoreDifference) > 1) ? "Win for" : "Advantage";
-            var leadPlayer = (scoreDifference > 0) ? player1.Name : player2.Name;
-            return $"{outcome} {leadPlayer}";
+            return scorePresenter.GetPointScore(player1, player2);
         }
 
         public string GetGameScore()
         {
-            return $"{player1.Name} {player1.Games} - {player2.Games} {player2.Name}";
+            return scorePresenter.GetGameScore(player1, player2);
         }
+
+        private bool IsScoreComplex(int points1, int points2) => points1 + points2 >= 6;
+
+        private bool IsScoreDifferenceGreaterThanOne(int points1, int points2) =>  Math.Abs(points1 - points2) > 1;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Tennis.Tests.Unit
 {
-    public class TennisPlayerTests
+    public class PlayerTests
     {
         [Theory]
         [InlineData(0, 1)]
@@ -11,13 +11,14 @@ namespace Tennis.Tests.Unit
         public void Points_WhenIncreasePoints_ReturnsExpectedValue(int initialPoints, int expectedPoints)
         {
             // Arrange
-            var player = new TennisPlayer("SpongeBob", initialPoints, 0);
+            var player = new Player("SpongeBob", initialPoints, 0);
 
             // Act
             player.IncreasePoints();
+            var actual = player.Points;
 
             // Assert
-            Assert.Equal(expectedPoints, player.Points);
+            Assert.Equal(expectedPoints, actual);
         }
 
         [Theory]
@@ -26,13 +27,14 @@ namespace Tennis.Tests.Unit
         public void Games_WhenIncreasePoints_RemainsTheSame(int initialPoints, int initialGames)
         {
             // Arrange
-            var player = new TennisPlayer("SpongeBob", initialPoints, initialGames);
+            var player = new Player("SpongeBob", initialPoints, initialGames);
 
             // Act
             player.IncreasePoints();
+            var actual = player.Games;
 
             // Assert
-            Assert.Equal(initialGames, player.Games);
+            Assert.Equal(initialGames, actual);
         }
 
         [Theory]
@@ -43,13 +45,14 @@ namespace Tennis.Tests.Unit
         public void Points_WhenIncreaseGamesAndResetPoints_EqualsZero(int initialPoints)
         {
             // Arrange
-            var player = new TennisPlayer("SpongeBob", initialPoints, 0);
+            var player = new Player("SpongeBob", initialPoints, 0);
 
             // Act
             player.IncreaseGamesAndResetPoints();
+            var actual = player.Points;
 
             // Assert
-            Assert.Equal(0, player.Points);
+            Assert.Equal(0, actual);
         }
     }
 }
