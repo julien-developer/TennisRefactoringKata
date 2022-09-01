@@ -17,7 +17,7 @@ namespace Tennis
             this.player2Name = player2Name;
         }
 
-        public string GetScore()
+        public string GetPointScore()
         {
             var score = "";
             if (p1point == p2point && p1point < 3)
@@ -138,6 +138,10 @@ namespace Tennis
                 P2Score();
         }
 
+        public string GetGameScore()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
 

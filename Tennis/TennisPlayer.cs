@@ -2,18 +2,31 @@
 {
     public class TennisPlayer
     {
-        public TennisPlayer(string name, int initialScore)
+        public TennisPlayer(string name, int initialPoints, int initialGames)
         {
             Name = name;
-            Score = initialScore;
+            Points = initialPoints;
+            Games = initialGames;
         }
 
-        public void IncreaseScore()
+        public void IncreasePoints()
         {
-            Score++;
+            Points++;
+        }
+
+        public void ResetPoints()
+        {
+            Points = 0;
+        }
+
+        public void IncreaseGamesAndResetPoints()
+        {
+            Games++;
+            ResetPoints();
         }
 
         public string Name { get; }
-        public int Score { get; private set; }
+        public int Points { get; private set; }
+        public int Games { get; private set; }
     }
 }

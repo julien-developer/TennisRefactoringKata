@@ -15,20 +15,34 @@ namespace Tennis
 
         public void WonPoint(PlayerId playerId)
         {
-            if (playerId == PlayerId.First)
-                player1.IncreaseScore();
-            else
-                player2.IncreaseScore();
+            var scoringPlayer = (playerId == PlayerId.First) ? player1 : player2;
+            var otherPlayer = (playerId == PlayerId.First) ? player2 : player1;
+            
+            scoringPlayer.IncreasePoints();
+
+            if ((scoringPlayer.Points + otherPlayer.Points) >= 6)
+            {
+                if (Math.Abs(player1.Points - player2.Points) > 1)
+                {
+                    scoringPlayer.IncreaseGamesAndResetPoints();
+                    otherPlayer.ResetPoints();
+                }
+            }
+            else if (scoringPlayer.Points == 4)
+            {
+                scoringPlayer.IncreaseGamesAndResetPoints();
+                otherPlayer.ResetPoints();
+            }
         }
 
-        public string GetScore()
+        public string GetPointScore()
         {
-            if (player1.Score < 4 && player2.Score < 4 && (player1.Score + player2.Score) < 6)
+            if (player1.Points < 4 && player2.Points < 4 && (player1.Points + player2.Points) < 6)
             {
-                return SimpleScore(player1.Score, player2.Score);
+                return SimpleScore(player1.Points, player2.Points);
             }
 
-            return ScoreWhenAnyPlayerHasAtLeastFourPoints(player1.Score, player2.Score);
+            return ScoreWhenAnyPlayerHasAtLeastFourPoints(player1.Points, player2.Points);
         }
 
         private string SimpleScore(int player1Score, int player2Score)
@@ -49,6 +63,11 @@ namespace Tennis
             var outcome = (Math.Abs(scoreDifference) > 1) ? "Win for" : "Advantage";
             var leadPlayer = (scoreDifference > 0) ? player1.Name : player2.Name;
             return $"{outcome} {leadPlayer}";
+        }
+
+        public string GetGameScore()
+        {
+            return $"{player1.Name} {player1.Games} - {player2.Games} {player2.Name}";
         }
     }
 }

@@ -3,7 +3,8 @@ namespace Tennis
     public interface ITennisGame
     {
         void WonPoint(PlayerId playerId);
-        string GetScore();
+        string GetPointScore();
+        string GetGameScore();
     }
 }
 

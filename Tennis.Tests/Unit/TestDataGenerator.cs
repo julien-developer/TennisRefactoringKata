@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace Tennis.Tests
+namespace Tennis.Tests.Unit
 {
-    public class TestDataGenerator : IEnumerable<object[]>
+    internal class TestDataGenerator : IEnumerable<object[]>
     {
         private readonly List<object[]> _data = new List<object[]>
         {
