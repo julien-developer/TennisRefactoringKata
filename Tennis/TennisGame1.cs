@@ -1,9 +1,12 @@
+using System;
+
 namespace Tennis
 {
     public class TennisGame1 : ITennisGame
     {
-        private int m_score1 = 0;
-        private int m_score2 = 0;
+        private int player1Score = 0;
+        private int player2Score = 0;
+
         private string player1Name;
         private string player2Name;
 
@@ -16,67 +19,39 @@ namespace Tennis
         public void WonPoint(string playerName)
         {
             if (playerName == "player1")
-                m_score1 += 1;
+                player1Score++;
             else
-                m_score2 += 1;
+                player2Score++;
         }
 
         public string GetScore()
         {
-            string score = "";
-            var tempScore = 0;
-            if (m_score1 == m_score2)
+            if (player1Score < 4 && player2Score < 4 && (player1Score + player2Score) < 6)
             {
-                switch (m_score1)
-                {
-                    case 0:
-                        score = "Love-All";
-                        break;
-                    case 1:
-                        score = "Fifteen-All";
-                        break;
-                    case 2:
-                        score = "Thirty-All";
-                        break;
-                    default:
-                        score = "Deuce";
-                        break;
+                return SimpleScore(player1Score, player2Score);
+            }
 
-                }
-            }
-            else if (m_score1 >= 4 || m_score2 >= 4)
+            return ScoreWhenAnyPlayerHasAtLeastFourPoints(player1Score, player2Score);
+        }
+
+        private string SimpleScore(int player1Score, int player2Score)
+        {
+            var scoreDescription1 = ScoreDescriptor.GetScoreDescription(player1Score);
+            var scoreDescription2 = (player1Score == player2Score) ? "All" : ScoreDescriptor.GetScoreDescription(player2Score);
+            return $"{scoreDescription1}-{scoreDescription2}";
+        }
+
+        private string ScoreWhenAnyPlayerHasAtLeastFourPoints(int player1Score, int player2Score)
+        {
+            if (player1Score == player2Score)
             {
-                var minusResult = m_score1 - m_score2;
-                if (minusResult == 1) score = "Advantage player1";
-                else if (minusResult == -1) score = "Advantage player2";
-                else if (minusResult >= 2) score = "Win for player1";
-                else score = "Win for player2";
+                return "Deuce";
             }
-            else
-            {
-                for (var i = 1; i < 3; i++)
-                {
-                    if (i == 1) tempScore = m_score1;
-                    else { score += "-"; tempScore = m_score2; }
-                    switch (tempScore)
-                    {
-                        case 0:
-                            score += "Love";
-                            break;
-                        case 1:
-                            score += "Fifteen";
-                            break;
-                        case 2:
-                            score += "Thirty";
-                            break;
-                        case 3:
-                            score += "Forty";
-                            break;
-                    }
-                }
-            }
-            return score;
+
+            var scoreDifference = player1Score - player2Score;
+            var outcome = (Math.Abs(scoreDifference) > 1) ? "Win for" : "Advantage";
+            var leadPlayer = (scoreDifference > 0) ? "player1" : "player2";
+            return $"{outcome} {leadPlayer}";
         }
     }
 }
-
