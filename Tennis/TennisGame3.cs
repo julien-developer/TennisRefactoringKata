@@ -31,14 +31,12 @@ namespace Tennis
             }
         }
 
-        public void WonPoint(string playerName)
+        public void WonPoint(PlayerId playerId)
         {
-            if (playerName == "player1")
+            if (playerId == PlayerId.First)
                 this.p1 += 1;
             else
                 this.p2 += 1;
         }
-
     }
 }
-

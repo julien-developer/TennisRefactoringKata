@@ -130,9 +130,9 @@ namespace Tennis
             p2point++;
         }
 
-        public void WonPoint(string player)
+        public void WonPoint(PlayerId playerId)
         {
-            if (player == "player1")
+            if (playerId == PlayerId.First)
                 P1Score();
             else
                 P2Score();
